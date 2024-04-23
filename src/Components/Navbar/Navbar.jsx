@@ -5,11 +5,6 @@ import logo from '../Assets/logo.png'
 import cart_icon from '../Assets/cart_icon.png'
 import { Link } from 'react-router-dom'
 import { ShopContext } from '../../Context/ShopContext'
-import { useAppDispatch } from '../../store/store'
-import { useSelector } from 'react-redux'
-import http from "../../lib/http"
-import { removeUser } from '../../store/slices/auth'
-import { toast } from 'sonner'
 
 export const Navbar = () => {
     const [menu, setMenu] = useState("shop")
