@@ -5,10 +5,28 @@ import logo from '../Assets/logo.png'
 import cart_icon from '../Assets/cart_icon.png'
 import { Link } from 'react-router-dom'
 import { ShopContext } from '../../Context/ShopContext'
+import { selectCurrentUser, useAppDispatch } from '../../store/store'
+import { useSelector } from 'react-redux'
+import http from "../../lib/http"
+import { removeUser } from '../../store/slices/auth'
+import { toast } from 'sonner'
 
 export const Navbar = () => {
     const [menu, setMenu] = useState("shop")
     const { getTotalCartItems } = useContext(ShopContext);
+    const user = useSelector(state => state?.auth?.user)
+    const dispatch = useAppDispatch()
+
+    const logout = async () => {
+        try {
+            await http.post("/api/Account/logout")
+            dispatch(removeUser())
+
+            toast.success("Success", { description: "Sucessfully logged out" })
+        } catch (err) {
+
+        }
+    }
 
     return (
         <div className='navbar'>
@@ -23,7 +41,9 @@ export const Navbar = () => {
                 <li onClick={() => { setMenu("kids") }}><Link style={{ textDecoration: 'none' }} to='kids'>Kids</Link>{menu === "kids" ? <hr /> : <></>}</li>
             </ul>
             <div className="nav-login-cart">
-                <Link to='/login'><button>Login</button></Link>
+                {user ?
+                    <button onClick={logout}>Logout</button>
+                    : <Link to='/login'><button>Login</button></Link>}
                 <Link to='/cart'><img src={cart_icon} alt="" /></Link>
                 <div className="nav-cart-count">{getTotalCartItems()}</div>
             </div>
