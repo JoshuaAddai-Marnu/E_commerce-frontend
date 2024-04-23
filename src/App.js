@@ -11,12 +11,15 @@ import { Footer } from './Components/Footer/Footer';
 import men_banner from './Components/Assets/banner_mens.png'
 import women_banner from './Components/Assets/banner_women.png'
 import kid_banner from './Components/Assets/banner_kids.png'
-import { store } from './store/store'
+import store from './store/store'
 import { Provider } from 'react-redux'
+import { Toaster } from 'sonner'
+
 
 function App() {
   return (
     <Provider store={store}>
+      <Toaster />
       <div >
         <BrowserRouter>
           <Navbar />
