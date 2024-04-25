@@ -68,3 +68,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+## 
+Authentication with API authentication endpoint, Redux for state management,
+Context API was used to group functionality regarding shopping (ShopContext) or cart (CartContext)
+React Google Map is used to show th location of our shop

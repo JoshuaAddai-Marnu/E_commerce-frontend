@@ -1,16 +1,24 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState, } from 'react'
 import './Navbar.css'
 
-import logo from '../Assets/logo.png'
+import logo from '../Assets/logo1.png'
 import cart_icon from '../Assets/cart_icon.png'
 import { Link } from 'react-router-dom'
 import { ShopContext } from '../../Context/ShopContext'
 
+import { toast } from 'sonner'
+import { removeUser } from "../../store/slices/auth"
+import { useAppDispatch } from "../../store/store"
+import { useSelector } from "react-redux"
+import http from "../../lib/http"
+import { CartContext } from '../../Context/CartContext'
+
 export const Navbar = () => {
     const [menu, setMenu] = useState("shop")
-    const { getTotalCartItems } = useContext(ShopContext);
+    const { getTotalCartItems } = useContext(CartContext);
     const user = useSelector(state => state?.auth?.user)
     const dispatch = useAppDispatch()
+    const [categories, setCategories] = useState([])
 
     const logout = async () => {
         try {
@@ -19,9 +27,23 @@ export const Navbar = () => {
 
             toast.success("Success", { description: "Sucessfully logged out" })
         } catch (err) {
-
+            console.log(err)
         }
     }
+
+    useEffect(() => {
+        async function FetchCategory() {
+            try {
+                const req = await http.get("/Api/categories")
+                const data = req.data
+                setCategories(data)
+            } catch (error) {
+            }
+
+        }
+
+        FetchCategory()
+    }, [])
 
     return (
         <div className='navbar'>
@@ -31,9 +53,12 @@ export const Navbar = () => {
             </div>
             <ul className="nav-menu">
                 <li onClick={() => { setMenu("shop") }}><Link style={{ textDecoration: 'none' }} to='/'>Shop</Link>{menu === "shop" ? <hr /> : <></>}</li>
-                <li onClick={() => { setMenu("mens") }}><Link style={{ textDecoration: 'none' }} to='/mens'>Men</Link>{menu === "mens" ? <hr /> : <></>}</li>
-                <li onClick={() => { setMenu("womens") }}><Link style={{ textDecoration: 'none' }} to='/womens'>Women</Link>{menu === "womens" ? <hr /> : <></>}</li>
-                <li onClick={() => { setMenu("kids") }}><Link style={{ textDecoration: 'none' }} to='kids'>Kids</Link>{menu === "kids" ? <hr /> : <></>}</li>
+                {
+                    categories.map(category => (
+                        <li key={category.id} onClick={() => { setMenu(category.name) }}><Link style={{ textDecoration: 'none' }} to={`/category/${category.name}`}>{category.name}</Link>{menu === category.name ? <hr /> : <></>}</li>
+                    ))
+                }
+
             </ul>
             <div className="nav-login-cart">
                 {user ?

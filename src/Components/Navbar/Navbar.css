@@ -11,6 +11,14 @@
     gap: 10px;
 }
 
+.nav-logo img {
+    /* Assuming you have an image inside the .nav-logo container */
+    width: 50px;
+    /* Adjust the width to make the image smaller */
+    height: auto;
+    /* Maintain aspect ratio */
+}
+
 .nav-logo p {
     color: #171717;
     font-size: 38px;
@@ -22,7 +30,7 @@
     align-items: center;
     list-style: none;
     gap: 50px;
-    color: #626262;
+    color: #e03333;
     font-size: 20px;
     font-weight: 500;
 }
@@ -34,6 +42,11 @@
     justify-content: center;
     gap: 3px;
     cursor: pointer;
+
+}
+
+.nav-menu li a {
+    color: blue;
 }
 
 .nav-menu hr {
@@ -41,7 +54,7 @@
     width: 80%;
     height: 3px;
     border-radius: 10px;
-    background: #FF4141;
+    background: #41a0ff;
 }
 
 .nav-login-cart {
@@ -79,7 +92,7 @@
     align-items: center;
     margin-top: -35px;
     margin-left: -55px;
-    border-radius: 11px; 
+    border-radius: 11px;
     font-size: 14px;
     background: red;
     color: white;
@@ -140,25 +153,29 @@
     }
 }
 
-@media(max-width:500px){
-    .nav{
+@media(max-width:500px) {
+    .nav {
         padding: 15px 15px;
     }
 
-    .nav-logo img{
+    .nav-logo img {
         width: 30px;
     }
-    .nav-logo p{
+
+    .nav-logo p {
         font-size: 18px;
     }
-    .nav-menu-visible{
+
+    .nav-menu-visible {
         height: 70px;
         top: 60px;
     }
-    .nav-login-cart{
+
+    .nav-login-cart {
         transform: scale(0.8);
-    } 
-    .nav-login-cart{
+    }
+
+    .nav-login-cart {
         gap: 10px;
     }
 }

@@ -1,63 +1,48 @@
-import React, { createContext, useState } from "react";
-import all_product from "../Components/Assets/all_product"
+import React, { createContext } from "react";
+import http from "../lib/http"
+import { toast } from "sonner";
 
 
 export const ShopContext = createContext(null);
-
-const getDefaultCart = ()=>{
-    let cart = {};
-    for (let index = 0; index < all_product.length+1; index++){
-        cart[index] = 0;
-    }
-    return cart;
-}
 const ShopContextProvider = (props) => {
-
-    const [cartItems,setCartItems] = useState(getDefaultCart())
-
-    const addToCart = (itemId) =>{
-        setCartItems((prev)=>({...prev,[itemId]:prev[itemId]+1}))
-        console.log(cartItems);
-    }
-
-    const removeFromCart = (itemId) =>{
-        setCartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}))
-    }
-
-    const getTotalCartAmount = () => {
-        let totalAmount = 0;
-        for(const item in cartItems)
-        {
-            if(cartItems[item]>0)
-            {
-                /*let itemInfo = all_product.find((product)=>product.id===Number(item))*/
-                let itemInfo = all_product.find((product)=>product.id===Number(item))
-                totalAmount += itemInfo.new_price * cartItems[item];
-            }
-            
+    const getAllProducts = async (showToast) => {
+        try {
+            const req = await http.get("/api/Products")
+            const data = req.data
+            showToast && toast.success("Successfull", {
+                description: "Successfully fetched all products"
+            })
+            return data
+        } catch (error) {
+            toast.error("Error", {
+                description: error?.response?.message ?? error?.message ?? "There was an error"
+            })
+            return []
         }
-        return totalAmount;
     }
 
-    const getTotalCartItems = () => {
-        let totalItem = 0;
-        for(const item in cartItems)
-        {
-            if(cartItems[item]>0)
-            {
-                totalItem+= cartItems[item];
-            }
+    const getAProduct = async (id) => {
+        try {
+            const req = await http.get(`/api/Products/${id}`)
+            const data = req.data
 
+            return data
+
+        } catch (error) {
+            toast.error("Error", {
+                description: "There was an error fetching th product or the product does not exist"
+            })
+
+            return null
         }
-        return totalItem;
     }
-    
-    const contextValue = {getTotalCartItems,getTotalCartAmount,all_product,cartItems,addToCart,removeFromCart}
+
+    const contextValue = { getAllProducts, getAProduct }
     return (
         <ShopContext.Provider value={contextValue}>
             {props.children}
         </ShopContext.Provider>
     )
-} 
+}
 
 export default ShopContextProvider;

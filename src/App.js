@@ -14,29 +14,35 @@ import kid_banner from './Components/Assets/banner_kids.png'
 import store from './store/store'
 import { Provider } from 'react-redux'
 import { Toaster } from 'sonner'
+import ShopContextProvider from './Context/ShopContext';
+import CartContextProvider from './Context/CartContext';
+import Checkout from './Components/Checkout/Checkout';
 
 
 function App() {
   return (
     <Provider store={store}>
-      <Toaster />
-      <div >
-        <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route path='/' element={<Shop />} />
-            <Route path='/mens' element={<ShopCategory banner={men_banner} category="men" />} />
-            <Route path='/womens' element={<ShopCategory banner={women_banner} category="women" />} />
-            <Route path='/kids' element={<ShopCategory banner={kid_banner} category="kid" />} />
-            <Route path="product" element={<Product />}>
-              <Route path=':productId' element={<Product />} />
-            </Route>
-            <Route path='/cart' element={<Cart />} />
-            <Route path='/login' element={<LoginSignup />} />
-          </Routes>
-          <Footer />
-        </BrowserRouter>
-      </div>
+      <ShopContextProvider>
+        <CartContextProvider>
+          <Toaster />
+          <div >
+            <BrowserRouter>
+              <Navbar />
+              <Routes>
+                <Route path='/' element={<Shop />} />
+                <Route path='/category/:categoryName' element={<ShopCategory banner={men_banner} />} />
+                <Route path="product" element={<Product />}>
+                  <Route path=':productId' element={<Product />} />
+                </Route>
+                <Route path='/cart' element={<Cart />} />
+                <Route path='/login' element={<LoginSignup />} />
+                <Route path='/checkout' element={<Checkout />} />
+              </Routes>
+              <Footer />
+            </BrowserRouter>
+          </div>
+        </CartContextProvider>
+      </ShopContextProvider>
     </Provider>
   );
 }
