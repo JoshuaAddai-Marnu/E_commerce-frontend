@@ -11,7 +11,7 @@ export const RelatedProducts = (category) => {
     async function getSimilar() {
       const response = await getAllProducts()
       if (response?.length) {
-        setRelatedProducts(response?.filter(p => p.category?.name != category)?.slice(0, 4))
+        setRelatedProducts(response?.filter(p => p.category?.name !== category)?.slice(0, 4))
       }
     }
     getSimilar()

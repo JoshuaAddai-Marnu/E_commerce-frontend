@@ -17,6 +17,9 @@ import { Toaster } from 'sonner'
 import ShopContextProvider from './Context/ShopContext';
 import CartContextProvider from './Context/CartContext';
 import Checkout from './Components/Checkout/Checkout';
+import Admin from './Pages/Admin';
+import AdminProducts from './Pages/AdminProducts';
+import AdminProductUpdate from './Pages/AdminProductUpdate';
 
 
 function App() {
@@ -29,14 +32,19 @@ function App() {
             <BrowserRouter>
               <Navbar />
               <Routes>
+                <Route path="admin" element={<Admin />}>
+                  <Route path='products' element={<AdminProducts />} />
+                  <Route path='products/:productId' element={<AdminProductUpdate />} />
+                </Route>
                 <Route path='/' element={<Shop />} />
-                <Route path='/category/:categoryName' element={<ShopCategory banner={men_banner} />} />
+                <Route path='/category/:categoryName' element={<ShopCategory />} />
                 <Route path="product" element={<Product />}>
                   <Route path=':productId' element={<Product />} />
                 </Route>
                 <Route path='/cart' element={<Cart />} />
                 <Route path='/login' element={<LoginSignup />} />
                 <Route path='/checkout' element={<Checkout />} />
+
               </Routes>
               <Footer />
             </BrowserRouter>

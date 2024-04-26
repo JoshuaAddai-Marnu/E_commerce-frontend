@@ -43,7 +43,7 @@ export const LoginSignup = () => {
 
   const onSubmit = async (data) => {
     console.log({ data })
-    if (stage == "login") {
+    if (stage === "login") {
       try {
         setIsloading(true)
         const req = await http.post("/api/Account/login", {
@@ -90,9 +90,9 @@ export const LoginSignup = () => {
   return (
     <div className='loginsignup'>
       <form onSubmit={handleSubmit(onSubmit)} className="loginsignup-container">
-        <h1>{stage == "login" ? "Log In" : "Sign Up"}</h1>
+        <h1>{stage === "login" ? "Log In" : "Sign Up"}</h1>
         <div className="loginsignup-fields">
-          {stage == "signup" &&
+          {stage === "signup" &&
             <>
 
               <input type='text' placeholder='Your Name' {...register("name")} />
@@ -116,9 +116,9 @@ export const LoginSignup = () => {
             }
           </p>}
         </div>
-        <button disabled={isLoading} type="submit">{isLoading ? "Loading..." : stage == "login" ? "Login" : "Signup"}</button>
+        <button disabled={isLoading} type="submit">{isLoading ? "Loading..." : stage === "login" ? "Login" : "Signup"}</button>
         {
-          stage == "signup" ?
+          stage === "signup" ?
             <p className="loginsignup-login">Already have an account? <span style={{ cursor: "pointer" }} onClick={() => setStage("login")}>Login here</span></p>
             :
             <p className="loginsignup-login">Dont have an account? <span style={{ cursor: "pointer" }} onClick={() => setStage("signup")}>Sign up</span></p>

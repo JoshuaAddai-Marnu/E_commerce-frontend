@@ -17,7 +17,7 @@ export const cartSlice = createSlice({
         addItem: (state, { payload }) => {
             console.log({ payload })
             const newProduct = payload;
-            const product = state.cart.findIndex(p => p.productId == newProduct.productId)
+            const product = state.cart.findIndex(p => p.productId === newProduct.productId)
 
             if (product < 0) {
                 state.cart = [...state.cart, newProduct]

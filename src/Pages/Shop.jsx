@@ -15,7 +15,7 @@ export const Shop = () => {
     useEffect(() => {
       async function fetchAll() {
           const result = await getAllProducts()
-          const women = result?.filter(p=> p?.category?.name =="Women")?.slice(0,4)
+          const women = result?.filter(p=> p?.category?.name ==="Women")?.slice(0,4)
           const offer = result?.sort(() => Math.random() - 0.5)?.slice(0,8)
           setPopular(women)
           setOffer(offer)
